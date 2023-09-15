@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1020812088349",
+    "project_id": "shyf-f9631",
+    "storage_bucket": "shyf-f9631.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020812088349:android:c17cf845be4aaf00c322f4",
+        "android_client_info": {
+          "package_name": "com.example.shyf_"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020812088349-9glqjtjmt73aah0bsjcg657vfeevt9a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjMPZPsDpUjfTrZDnNKeixmzDsV9Scmzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020812088349-9glqjtjmt73aah0bsjcg657vfeevt9a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

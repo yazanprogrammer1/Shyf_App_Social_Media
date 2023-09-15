@@ -1,0 +1,10 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@drawable/logo_sh"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/logo_sh"
+        android:duration="100" />
+    <!-- أضف المزيد من الأطر هنا حسب الحاجة -->
+</animation-list>

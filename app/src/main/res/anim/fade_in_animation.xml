@@ -1,0 +1,16 @@
+<!-- res/anim/fade_scale_animation.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="1"
+        android:duration="500" />
+    <scale
+        android:fromXScale="0.5"
+        android:fromYScale="0.5"
+        android:toXScale="1"
+        android:toYScale="1"
+        android:duration="500"
+        android:pivotX="50%"
+        android:pivotY="50%" />
+</set>
+

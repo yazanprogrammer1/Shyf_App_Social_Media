@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">شيف</string>
+    <string name="title_home">الرئيسية</string>
+    <string name="title_dashboard">لوحة التحكم</string>
+    <string name="title_notifications" translatable="false">الإشعارات</string>
+    <string name="home">الرئيسية</string>
+    <string name="search">البحث</string>
+    <string name="notifications">الإشعارات</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="password">كلمة المرور</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="registration">التسجيل</string>
+    <string name="register">تسجيل</string>
+    <string name="previous">السابق</string>
+    <string name="next">التالي</string>
+    <string name="whatsapp_link">رابط الواتساب</string>
+    <string name="facebook_link">رابط الفيسبوك</string>
+    <string name="personal_information_1">معلومات شخصية / 1</string>
+    <string name="name">الاسم</string>
+    <string name="information_about_you">معلومات عنك</string>
+    <string name="personal_information_2">معلومات شخصية / 2</string>
+    <string name="personal_information_3">معلومات شخصية / 3</string>
+    <string name="update">تحديث</string>
+    <string name="add_post">إضافة منشور</string>
+    <string name="add_post_title">إضافة منشور</string>
+    <string name="shyf">شيف</string>
+    <string name="description">الوصف</string>
+    <string name="locations">الموقع</string>
+    <string name="country">البلد</string>
+    <string name="city">المدينة</string>
+    <string name="street">الشارع</string>
+    <string name="more">المزيد</string>
+    <string name="your_posts">منشوراتك</string>
+    <string name="save_posts">حفظ المنشورات</string>
+
+    <string name="posts">منشوراته</string>
+    <string name="add_photo">إضافة صورة</string>
+    <string name="update_profile">تحديث الملف الشخصي</string>
+    <string name="update_post">تحديث المنشور</string>
+    <string name="follow">متابعة</string>
+    <string name="unfollow">إلغاء المتابعة</string>
+    <string name="followers">المتابِعون</string>
+    <string name="following">يتابع</string>
+    <string name="followedPost_fragment">منشورات المُتابَعة</string>
+    <string name="allPost_fragment">كل المنشورات</string>
+    <!-- TODO: قم بإزالة أو تغيير هذا النص البديل -->
+    <string name="hello_blank_fragment">مرحبًا بالشاشة الفارغة</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="there_seems_to_be_a_problem_with_the_internet_connection_please_fix_the_problem_and_try_again">يبدو أن هناك مشكلة في اتصال الإنترنت. يرجى إصلاح المشكلة والمحاولة مرة أخرى</string>
+    <string name="try_again">حاول مرة أخرى</string>
+    <string name="settings">الإعدادات</string>
+    <string name="change_the_language">تغيير اللغة</string>
+    <string name="Allposts">المنشورات</string>
+    <string name="Requests">طلب</string>
+    <string name="food_request">طلب طعام</string>
+    <string name="report">الإبلاغ</string>
+    <string name="delete">حذف</string>
+    <string name="night_mode">وضع الليلي</string>
+    <string name="send_your_problem">أرسل مشكلتك</string>
+    <string name="welcome_to_n_shyf">مرحبًا بك في \n شيف 👩‍🍳</string>
+    <string name="this_app_can_be_a_platform_for_people_who_love_to_cook_and_want_to_sell_homemade_foods_n_home_cooks_will_be_able_to_create_their_own_profiles_and_offer_the_meals_they_serve_for_sale_n_users_can_search_for_meals_available_in_their_area_and_order_directly">يمكن لهذا التطبيق أن يكون منصة للأشخاص الذين يحبون الطبخ ويرغبون في بيع الأطعمة المصنوعة في المنزل.\n سيكون بإمكان الطهاة المنزليين إنشاء ملفاتهم الشخصية الخاصة وتقديم الوجبات التي يقدمونها للبيع.\n يمكن للمستخدمين البحث عن الوجبات المتوفرة في منطقتهم والطلب مباشرةً.</string>
+    <string name="get_started">البدء</string>
+    <string name="do_not_have_any_account_sign_up">ليس لديك حساب؟ اشترك الآن</string>
+    <string name="sign_up">الاشتراك</string>
+    <string name="registration_information">معلومات التسجيل</string>
+    <string name="photo">صورة</string>
+    <string name="open_store">افتح متجرك</string>
+</resources>

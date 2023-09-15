@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SCREEN"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:strokeColor="@color/prim2"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/ContactName"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/imgProfile"
+                android:layout_toRightOf="@id/imgProfile"
+                android:text=""
+                android:textSize="8pt"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imgProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+            <TextView
+                android:id="@+id/timeMessage"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgProfile"
+                android:layout_toRightOf="@id/imgProfile"
+                android:text=""
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/ContactStatus"
+                style="@style/TEXTSECAND"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgProfile"
+                android:layout_toRightOf="@id/imgProfile"
+                android:text=""
+                android:textSize="8pt"
+                app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+                app:layout_constraintStart_toStartOf="@+id/ContactName"
+                app:layout_constraintTop_toBottomOf="@+id/ContactName" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_on"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_launcher_background"
+                android:visibility="gone"
+                app:civ_border_color="#05df29"
+                app:civ_border_width="15dp"
+                app:layout_constraintStart_toStartOf="@+id/imgProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_off"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/ContactName"
+                android:layout_toEndOf="@id/imgProfile"
+                android:src="@drawable/ic_launcher_background"
+                android:visibility="visible"
+                app:civ_border_color="#bfbfbf"
+                app:civ_border_width="15dp"
+                app:layout_constraintStart_toStartOf="@+id/imgProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+            <TextView
+                android:id="@+id/unSeenMessage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/button_style"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>

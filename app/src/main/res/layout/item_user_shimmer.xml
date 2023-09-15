@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="15dp"
+    android:layout_margin="10dp"
+    android:elevation="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgProfile"
+        android:paddingTop= "10dp"
+        android:paddingLeft="5dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#B1EDB1"
+        app:civ_border_overlay="true"
+        />
+
+
+    <TextView
+        android:id="@+id/ContactName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imgProfile"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/imgProfile"
+        android:layout_toRightOf="@id/imgProfile"
+        android:background="#B1EDB1"
+        android:textColor="@color/black"
+        android:textSize="8pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ContactStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_toRightOf="@id/imgProfile"
+        android:layout_toEndOf="@id/imgProfile"
+        android:layout_marginTop="50dp"
+        android:background="#B1EDB1"
+
+        android:layout_marginLeft="20dp"
+        android:textColor="#565757"
+        android:textSize="8pt"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_width="10dp"
+        app:civ_border_color="@color/prim2"
+        android:id="@+id/img_on"
+        android:visibility="gone"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_below="@id/ContactName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-18dp"
+        android:layout_toRightOf="@id/imgProfile"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_width="10dp"
+        app:civ_border_color="#bfbfbf"
+        android:id="@+id/img_off"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_below="@id/ContactName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-18dp"
+        android:layout_toRightOf="@id/imgProfile"
+        />
+
+
+
+
+
+</RelativeLayout>

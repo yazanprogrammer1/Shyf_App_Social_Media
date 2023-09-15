@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">shyf</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="registration">Registration</string>
+    <string name="register">Register</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="whatsapp_link">Whatsapp Link</string>
+    <string name="facebook_link">Facebook Link</string>
+    <string name="personal_information_1">Personal Information / 1</string>
+    <string name="name">Name</string>
+    <string name="information_about_you">information about you</string>
+    <string name="personal_information_2">Personal Information / 2</string>
+    <string name="personal_information_3">Personal Information / 3</string>
+    <string name="update">Update</string>
+    <string name="add_post">Add Post</string>
+    <string name="add_post_title">Add Post</string>
+    <string name="shyf">Shyf</string>
+    <string name="description">Description</string>
+    <string name="locations">Location</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="street">street</string>
+    <string name="more">More</string>
+    <string name="your_posts">Your posts</string>
+    <string name="save_posts">Save posts</string>
+
+    <string name="posts">His posts</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="update_post">Update post</string>
+    <string name="follow">follow</string>
+    <string name="unfollow">unfollow</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="followedPost_fragment">Followed Post Fragment</string>
+    <string name="allPost_fragment">All Post Fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_internet_connection">no internet connection</string>
+    <string name="there_seems_to_be_a_problem_with_the_internet_connection_please_fix_the_problem_and_try_again">There seems to be a problem with the internet connection. Please fix the problem and try again</string>
+    <string name="try_again">try again</string>
+    <string name="settings">Settings</string>
+    <string name="change_the_language">Change the language</string>
+    <string name="Allposts">Posts</string>
+    <string name="Requests">Requests</string>
+    <string name="food_request">Food request</string>
+    <string name="report">Report</string>
+    <string name="delete">Delete</string>
+    <string name="night_mode">Night mode</string>
+    <string name="send_your_problem">Send your problem</string>
+    <string name="welcome_to_n_shyf">Welcome to \n Shyf 👩‍🍳</string>
+    <string name="this_app_can_be_a_platform_for_people_who_love_to_cook_and_want_to_sell_homemade_foods_n_home_cooks_will_be_able_to_create_their_own_profiles_and_offer_the_meals_they_serve_for_sale_n_users_can_search_for_meals_available_in_their_area_and_order_directly">This app can be a platform for people who love to cook and want to sell homemade foods.\n Home cooks will be able to create their own profiles and offer the meals they serve for sale.\n Users can search for meals available in their area and order directly.</string>
+    <string name="get_started">Get Started</string>
+    <string name="do_not_have_any_account_sign_up">Do not have any account ? Sign UP</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="registration_information">Registration Information</string>
+    <string name="photo">Photo</string>
+    <string name="open_store">Open Store</string>
+
+
+</resources>

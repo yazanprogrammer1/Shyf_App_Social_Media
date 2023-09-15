@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_home"
+        android:icon="@drawable/home_sh"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/tab_search"
+        android:icon="@drawable/search_sh"
+        android:title="@string/search" />
+    <item
+        android:id="@+id/tab_add"
+        android:icon="@drawable/blus_sh2"
+        android:title="Add" />
+    <item
+        android:id="@+id/tab_notification"
+        android:icon="@drawable/notification_sh"
+        android:title="@string/notifications" />
+    <item
+        android:id="@+id/tab_profile"
+        android:icon="@drawable/profile_sh"
+        android:title="@string/profile" />
+
+</menu>
