@@ -26,3 +26,4 @@ Users can search for meals available in their area and order directly.
 * Coroutines
 * Volley
 * Paging 3
+* MVVM
