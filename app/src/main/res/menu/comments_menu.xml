@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/deleteComments"
+        android:title="Delete comments"
+        android:icon="@drawable/delete_item"
+        />
+    <!-- يمكنك إضافة المزيد من الرموز التعبيرية هنا -->
+</menu>

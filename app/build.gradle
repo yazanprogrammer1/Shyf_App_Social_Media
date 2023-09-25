@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.shyf_"
-        minSdk 24
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -41,11 +41,11 @@ android {
 dependencies {
     implementation platform("com.google.firebase:firebase-bom:30.5.0")
     implementation "com.google.firebase:firebase-auth-ktx"
-    implementation 'com.google.firebase:firebase-auth:22.1.1'
+    implementation 'com.google.firebase:firebase-auth:22.1.2'
 
 
     implementation 'com.google.firebase:firebase-messaging-ktx:23.2.1'
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
     implementation 'com.google.firebase:firebase-database:20.2.2'
 
@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
 
     implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.7.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.8.1'
 
 
     constraints {
@@ -77,10 +77,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'androidx.navigation:navigation-fragment:2.6.0'
-    implementation 'androidx.navigation:navigation-ui:2.6.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.2'
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
@@ -135,5 +135,4 @@ dependencies {
 
     // StoryView
     implementation 'com.github.OMARIHAMZA:StoryView:1.0.2-alpha'
-
 }

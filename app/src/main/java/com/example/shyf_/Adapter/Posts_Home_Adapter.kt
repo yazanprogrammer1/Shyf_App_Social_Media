@@ -23,16 +23,21 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -43,15 +48,21 @@ import com.example.shyf_.apis.RetrofitAddNewRequest
 import com.example.shyf_.apis.RetrofitDeleteLike
 import com.example.shyf_.apis.RetrofitDeletePosts
 import com.example.shyf_.apis.RetrofitDeleteSavePost
+import com.example.shyf_.apis.RetrofitGetComments
 import com.example.shyf_.apis.RetrofitGetIfSaved
 import com.example.shyf_.apis.RetrofitIfLikeThePost
+import com.example.shyf_.apis.RetrofitInsertComments
 import com.example.shyf_.apis.RetrofitInsertLike
 import com.example.shyf_.apis.RetrofitSavedPost
 import com.example.shyf_.databinding.PostLayoutBinding
+import com.example.shyf_.inite.GetUserData
+import com.example.shyf_.model.Comments
 import com.example.shyf_.model.Posts
+import com.example.shyf_.model.ResultComments
 import com.example.shyf_.model.ResultFollowers
 import com.example.shyf_.model.ResultLikes
 import com.example.shyf_.model.Result_AddRequest
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.thekhaeng.pushdownanim.PushDownAnim
@@ -67,7 +78,7 @@ import java.util.TimeZone
 class Posts_Home_Adapter(
     var activity: Activity,
     var arrayList: ArrayList<Posts>,
-    var rootView: ConstraintLayout
+    var rootView: ConstraintLayout,
 ) :
     RecyclerView.Adapter<Posts_Home_Adapter.Holder>() {
 
@@ -156,7 +167,7 @@ class Posts_Home_Adapter(
                     .getIfLike(id, arrayList.get(position).id, arrayList.get(position).userId)
                 call2.enqueue(object : Callback<ResultLikes> {
                     override fun onResponse(
-                        call: Call<ResultLikes>, response: Response<ResultLikes>
+                        call: Call<ResultLikes>, response: Response<ResultLikes>,
                     ) {
                         if (!response.body()!!.error!!) {
                             holder.binding.imgLikePost.setImageResource(R.drawable.like_sh2)
@@ -185,7 +196,7 @@ class Posts_Home_Adapter(
                         .InsertLikes(id, arrayList.get(position).id, arrayList.get(position).userId)
                     call.enqueue(object : Callback<ResultLikes> {
                         override fun onResponse(
-                            call: Call<ResultLikes>, response: Response<ResultLikes>
+                            call: Call<ResultLikes>, response: Response<ResultLikes>,
                         ) {
                             if (response.body()!!.error === false) {
                                 holder.binding.imgLikeAnimation.visibility = ImageView.VISIBLE
@@ -423,7 +434,7 @@ class Posts_Home_Adapter(
                             call.enqueue(object : Callback<Result_AddRequest> {
                                 override fun onResponse(
                                     call: Call<Result_AddRequest>,
-                                    response: Response<Result_AddRequest>
+                                    response: Response<Result_AddRequest>,
                                 ) {
                                     if (response.body()!!.error != true) {
                                         Log.d("Response ---> ", "Add Request successfully")
@@ -437,7 +448,7 @@ class Posts_Home_Adapter(
 
                                 override fun onFailure(
                                     call: Call<Result_AddRequest>,
-                                    t: Throwable
+                                    t: Throwable,
                                 ) {
                                     showCenteredMessage("Request not sent ❌")
                                     bottomSheetDialog.dismiss()
@@ -475,7 +486,7 @@ class Posts_Home_Adapter(
             .getIfSaved(id, arrayList.get(position).id, arrayList.get(position).userId)
         call.enqueue(object : Callback<ResultFollowers> {
             override fun onResponse(
-                call: Call<ResultFollowers>, response: Response<ResultFollowers>
+                call: Call<ResultFollowers>, response: Response<ResultFollowers>,
             ) {
                 if (!response.body()!!.error!!) {
                     holder.binding.imgSavePost.setImageResource(R.drawable.save_sh2)
@@ -502,7 +513,7 @@ class Posts_Home_Adapter(
                     )
                 call.enqueue(object : Callback<ResultFollowers> {
                     override fun onResponse(
-                        call: Call<ResultFollowers>, response: Response<ResultFollowers>
+                        call: Call<ResultFollowers>, response: Response<ResultFollowers>,
                     ) {
                         if (response.body()!!.error === false) {
                             holder.binding.imgSavePost.setImageResource(R.drawable.save_sh)
@@ -527,7 +538,7 @@ class Posts_Home_Adapter(
                     )
                 call.enqueue(object : Callback<ResultFollowers> {
                     override fun onResponse(
-                        call: Call<ResultFollowers>, response: Response<ResultFollowers>
+                        call: Call<ResultFollowers>, response: Response<ResultFollowers>,
                     ) {
                         if (response.body()!!.error === false) {
                             showCenteredMessage("Saved")
@@ -553,7 +564,7 @@ class Posts_Home_Adapter(
             .getIfLike(id, arrayList.get(position).id, arrayList.get(position).userId)
         call2.enqueue(object : Callback<ResultLikes> {
             override fun onResponse(
-                call: Call<ResultLikes>, response: Response<ResultLikes>
+                call: Call<ResultLikes>, response: Response<ResultLikes>,
             ) {
                 if (!response.body()!!.error!!) {
                     holder.binding.imgLikePost.setImageResource(R.drawable.like_sh2)
@@ -580,7 +591,7 @@ class Posts_Home_Adapter(
                     )
                 call.enqueue(object : Callback<ResultLikes> {
                     override fun onResponse(
-                        call: Call<ResultLikes>, response: Response<ResultLikes>
+                        call: Call<ResultLikes>, response: Response<ResultLikes>,
                     ) {
                         if (response.body()!!.error === false) {
                             holder.binding.imgLikePost.setImageResource(R.drawable.like_sh1)
@@ -604,7 +615,7 @@ class Posts_Home_Adapter(
                     .InsertLikes(id, arrayList.get(position).id, arrayList.get(position).userId)
                 call.enqueue(object : Callback<ResultLikes> {
                     override fun onResponse(
-                        call: Call<ResultLikes>, response: Response<ResultLikes>
+                        call: Call<ResultLikes>, response: Response<ResultLikes>,
                     ) {
                         if (response.body()!!.error === false) {
                             showCenteredMessage("like")
@@ -623,7 +634,111 @@ class Posts_Home_Adapter(
             }
         }
 
+        //======================================================================= Comments POSTS CODE
+        holder.binding.imgCommentsPost.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(activity, R.style.BottomSheetDialogTheme)
+            var bottomSheetView = LayoutInflater.from(activity).inflate(
+                R.layout.buttom_sheet_comments_layout,
+                activity.findViewById<LinearLayout>(R.id.layout_dialog)
+            )
+            getAllComments(position, bottomSheetView)
+            bottomSheetView.findViewById<FrameLayout>(R.id.chatscreen_btn_send).setOnClickListener {
+                var id = GetUserData(activity).getId()
+                var comment =
+                    bottomSheetView.findViewById<EditText>(R.id.chatsreen_et_writemessage).text.toString()
+                        .trim()
+                AddComment(
+                    bottomSheetView.findViewById<EditText>(R.id.chatsreen_et_writemessage),
+                    comment, getCurrentDateTime(), id, arrayList[position].id!!.toInt(), position
+                )
+                notifyDataSetChanged()
+            }
+            bottomSheetView.findViewById<AppCompatImageView>(R.id.chatscreen_iv_emoji)
+                .setOnClickListener {
 
+                }
+
+            bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog.show()
+        }
+
+    }
+    private fun AddComment(
+        field: EditText,
+        comment: String,
+        timeAdd: String,
+        userId: Int,
+        postId: Int,
+        position: Int,
+    ) {
+        val call: Call<ResultComments> = RetrofitInsertComments.getInstance().myApi.insertComments(
+            comment,
+            timeAdd,
+            userId,
+            postId
+        )
+        call.enqueue(object : Callback<ResultComments> {
+            override fun onResponse(
+                call: Call<ResultComments>, response: Response<ResultComments>,
+            ) {
+                Log.d("Response ---> ", "Add Comment successfully")
+                if (response.body()!!.error != true) {
+                    showCenteredMessage("Added")
+                    Toast.makeText(activity, "Added", Toast.LENGTH_SHORT).show()
+                    field.setText("")
+                    arrayList[position].numComments = arrayList[position].numComments!! + 1
+                    notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultComments>, t: Throwable) {
+                showCenteredMessage("Not add")
+                Toast.makeText(activity, "Not add", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    // تحديث البيانات بإضافة التعليق الجديد إلى القائمة (arrayList)
+
+    private fun getAllComments(position: Int, bottomSheetView: View) {
+        val call: Call<ArrayList<Comments>> =
+            RetrofitGetComments.getInstance().myApi.getCommentsPost(arrayList[position].id!!)
+        call.enqueue(object : Callback<ArrayList<Comments>> {
+            override fun onResponse(
+                call: Call<ArrayList<Comments>>,
+                response: Response<ArrayList<Comments>>,
+            ) {
+                val productsList: ArrayList<Comments> = response.body()!!
+                val adapter = CommentsAdapter(
+                    activity, productsList
+                )
+                val layoutManager: RecyclerView.LayoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                bottomSheetView.findViewById<RecyclerView>(R.id.listComments).layoutManager =
+                    layoutManager
+                bottomSheetView.findViewById<RecyclerView>(R.id.listComments).visibility =
+                    View.VISIBLE
+                bottomSheetView.findViewById<RecyclerView>(R.id.listComments).setHasFixedSize(true)
+                bottomSheetView.findViewById<RecyclerView>(R.id.listComments).adapter = adapter
+                bottomSheetView.findViewById<ShimmerFrameLayout>(R.id.shimmerComments).visibility =
+                    View.GONE
+                Log.e("yazan", "Created comments:)")
+            }
+
+            override fun onFailure(call: Call<ArrayList<Comments>>, t: Throwable) {
+                Log.e("yazan", t.message!!)
+                bottomSheetView.findViewById<ConstraintLayout>(R.id.NoDataRvComments).visibility =
+                    View.VISIBLE
+                bottomSheetView.findViewById<ShimmerFrameLayout>(R.id.shimmerComments).visibility =
+                    View.GONE
+            }
+        })
+    }
+
+    private fun getCurrentDateTime(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val currentDate = Date()
+        return dateFormat.format(currentDate)
     }
 
     // تحويل الوقت من النص إلى الشكل المطلوب

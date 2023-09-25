@@ -17,7 +17,7 @@
         android:text="______"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/layout_camera" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView11"
@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/photo"
+        android:text="Comments"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/textView12"
@@ -35,23 +35,181 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listComments"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="530dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/chatscreen_ll_etwritemsg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/NoDataRvComments"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/chatscreen_ll_etwritemsg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <ImageView
+            android:id="@+id/noData"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/save"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/txtNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="No Comments"
+            android:textColor="@color/prim2"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/noData"
+            app:layout_constraintStart_toStartOf="@+id/noData"
+            app:layout_constraintTop_toBottomOf="@+id/noData" />
+
+        <TextView
+            android:id="@+id/txtSubNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Be the first to comment on the post"
+            app:layout_constraintEnd_toEndOf="@+id/txtNoData"
+            app:layout_constraintStart_toStartOf="@+id/txtNoData"
+            app:layout_constraintTop_toBottomOf="@+id/txtNoData" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerComments"
         android:layout_width="0dp"
-        android:layout_height="0dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="530dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/chatscreen_ll_etwritemsg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/comments_layout_list" />
+
+            <include layout="@layout/comments_layout_list" />
+
+            <include layout="@layout/comments_layout_list" />
+
+            <include layout="@layout/comments_layout_list" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chatscreen_ll_etwritemsg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_style"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chatscreen_btn_send"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/chatscreen_cvet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:cardBackgroundColor="@color/prim2"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="40dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/chatscreen_iv_emoji"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_emoji_0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1"
+                    app:tint="@color/prim1" />
+
+                <EditText
+                    android:id="@+id/chatsreen_et_writemessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_style"
+                    android:gravity="center|start"
+                    android:hint="Type Your Comment"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="textShortMessage|textMultiLine|textCapSentences"
+                    android:maxLines="10"
+                    android:minLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chatscreen_iv_emoji"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/chatscreen_btn_send"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_style"
+        app:layout_constraintBottom_toBottomOf="@id/chatscreen_ll_etwritemsg"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop=".5dp"
+            android:paddingStart="2dp"
+            android:src="@drawable/ic_send"
+            app:tint="@color/white" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,18 +6,18 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.shyf_.apis.RetrofitSignIn
-import com.example.shyf_.apis.RetrofitUpdateToken
 import com.example.shyf_.databinding.ActivitySignInBinding
 import com.example.shyf_.model.Result
 import com.example.shyf_.model.User
+import com.example.shyf_.notification.Constants
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,34 +25,34 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class SignInActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySignInBinding
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     lateinit var rootView: ConstraintLayout // تعريف المتغير هنا
-    var Token = ""
+    var token = ""
     lateinit var auth: FirebaseAuth
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-
+    var userIdSignIn: String = ""
+    lateinit var uid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //... code sign in
-        auth = Firebase.auth
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Token = task.result.toString()
-//                showCenteredMessage("Token Done")
-            } else {
-//                showCenteredMessage("No token")
-            }
-            //this is the token retrieved
-        }
+
+        auth = FirebaseAuth.getInstance()
         rootView = binding.rootConst
         onClickItem()
+    }
 
+    override fun onStart() {
+        super.onStart()
+//        Log.d("YZ", auth.uid!!)
+        getUserToken()
+        Log.d("YZ", getUserIdFb())
     }
 
     private fun onClickItem() {
@@ -63,21 +63,35 @@ class SignInActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             if (checkInput()) {
                 loginFirebase()
-                updateToken()
             }
         }
     }
 
+    private fun getUserIdFb(): String {
+        val currentUser = auth.uid
+        if (currentUser != null) {
+            // استخراج معرف المستخدم (UID)
+            uid = currentUser
+            // يمكنك استخدام مُعرف المستخدم (uid) هنا في نشاطك
+            // على سبيل المثال، يمكنك تخزينه أو استخدامه كمعرف فريد للمستخدم
+        } else {
+            // المستخدم ليس مسجل الدخول، يمكنك تنفيذ الإجراءات اللازمة في هذا الحالة
+            uid = "null"
+        }
+        return uid!!
+    }
+
     private fun loginFirebase() {
-        binding.progressSignIn.setVisibility(View.VISIBLE)
+        binding.progressSignIn.visibility = View.VISIBLE
         val email: String = binding.emailSignIn.editText!!.text.toString().trim()
         val password = binding.passwordSignIn.editText!!.text.toString().trim()
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 userSignIn()
+//                updateUserTokenInFirestore(auth.currentUser!!.uid, token)
             } else {
                 showCenteredMessage("Error To Login")
-                binding.progressSignIn.setVisibility(View.GONE)
+                binding.progressSignIn.visibility = View.GONE
             }
         }
     }
@@ -165,30 +179,51 @@ class SignInActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateToken() {
-        val email: String = binding.emailSignIn.editText!!.text.toString().trim()
-        val password = binding.passwordSignIn.editText!!.text.toString().trim()
-        val call: Call<Result> =
-            RetrofitUpdateToken.getInstance().getMyApi()
-                .UpdateToken(email, password, Token)
-        call.enqueue(object : Callback<Result> {
-            override fun onResponse(call: Call<Result>, response: Response<Result>) {
-                if (!response.body()!!.error!!) {
-                    val shared = getSharedPreferences("user_data", MODE_PRIVATE)
-                    val editor = shared.edit()
-                    editor.putString(
-                        "userToken",
-                        response.body()!!.user!!.userToken.toString()
-                    )
-                        .apply()
-//                    showCenteredMessage("Update Token \n ${response.body()!!.user!!.userToken.toString()}")
-                }
-            }
+    private fun updateUserTokenInFirestore(userId: String, newToken: String) {
+        val db = FirebaseFirestore.getInstance()
+        val userRef = db.collection(Constants.KEY_COLLECTION_USER).document(userId)
 
-            override fun onFailure(call: Call<Result>, t: Throwable) {
-                Log.d("Token Not Updated -->", t.message!!)
+        val tokenData = hashMapOf<String, Any>(
+            "userToken" to newToken
+        )
+        userRef.update(tokenData)
+            .addOnSuccessListener {
+                // تم تحديث التوكن بنجاح
+                // يمكنك أيضًا إجراء أي عمليات إضافية هنا بعد التحديث
+                Toast.makeText(applicationContext, "token updated", Toast.LENGTH_SHORT).show()
             }
-        })
+            .addOnFailureListener { e ->
+                // حدث خطأ أثناء تحديث التوكن
+                Log.e("Firestore Update Error", e.message, e)
+            }
+    }
+
+    fun getUserToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                token = task.result.toString()
+                showCenteredMessage("Token Done")
+            } else {
+                showCenteredMessage("No token")
+            }
+            //this is the token retrieved
+        }
+    }
+
+    private fun updateToken(token: String) {
+        val shared = getSharedPreferences("user_data", MODE_PRIVATE)
+        val editor = shared.edit()
+        editor.putString(
+            "userToken", token
+        )
+        val database = FirebaseFirestore.getInstance()
+        database.collection(Constants.KEY_COLLECTION_USER)
+            .document(auth.currentUser!!.uid).update("userToken", token)
+            .addOnSuccessListener {
+                Log.d("TOKEN UPDATE STATUS", "Token Updated Successfully")
+            }.addOnFailureListener {
+                Log.d("TOKEN UPDATE STATUS", "Failed to Update The Token")
+            }
     }
 
     private fun showCenteredMessage(message: String) {
@@ -217,7 +252,7 @@ class SignInActivity : AppCompatActivity() {
         } else if (binding.passwordSignIn.editText!!.text.isEmpty()) {
             binding.passwordSignIn.error = "Password can't empty!"
             return false
-        } else if (binding.passwordSignIn.editText!!.text.toString().length>8) {
+        } else if (binding.passwordSignIn.editText!!.text.toString().length > 8) {
             binding.passwordSignIn.error = "Password can't >8!"
             return false
         }

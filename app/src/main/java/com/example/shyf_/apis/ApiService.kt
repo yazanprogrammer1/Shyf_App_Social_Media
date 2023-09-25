@@ -1,10 +1,12 @@
 package com.example.shyf_.apis
 
+import com.example.shyf_.model.Comments
 import com.example.shyf_.model.Followers
 import com.example.shyf_.model.Notes
 import com.example.shyf_.model.Posts
 import com.example.shyf_.model.Request
 import com.example.shyf_.model.Result
+import com.example.shyf_.model.ResultComments
 import com.example.shyf_.model.ResultFollow
 import com.example.shyf_.model.ResultFollowers
 import com.example.shyf_.model.ResultLikes
@@ -42,6 +44,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("SignUp.php")
     fun SignUp(
+        @Field("id") id: Int?,
         @Field("email") email: String?,
         @Field("password") password: String?,
         @Field("whatsappLink") whatsappLink: String?,
@@ -49,8 +52,8 @@ interface ApiService {
         @Field("name") name: String?,
         @Field("information") information: String?,
         @Field("userImage") userImage: String?,
-        @Field("userToken") userToken: String?
-
+        @Field("userToken") userToken: String?,
+        @Field("UserIdFb") userId: String?
     ): Call<Result>
 
     @FormUrlEncoded
@@ -281,4 +284,26 @@ interface ApiService {
     fun getStoryForUser(
         @Query("user_id") user_id: Int
     ): Call<List<Storys>>
+
+    @FormUrlEncoded
+    @POST("InsertComments.php")
+    fun insertComments(
+        @Field("comment") comment: String?,
+        @Field("timeAdd") timeAdd: String?,
+        @Field("userId") userId: Int?,
+        @Field("postId") postId: Int?
+    ): Call<ResultComments>
+
+
+    @GET("getCommentsPost.php")
+    fun getCommentsPost(
+        @Query("postId") postId: Int
+    ): Call<ArrayList<Comments>>
+
+    @FormUrlEncoded
+    @POST("deleteCommentsById.php")
+    fun deleteCommentsById(
+        @Field("id") id: Int?,
+        @Field("postId") postId: Int?
+    ): Call<ResultComments>
 }

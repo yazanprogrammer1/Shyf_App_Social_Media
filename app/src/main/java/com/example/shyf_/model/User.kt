@@ -12,5 +12,6 @@ class User(
     val userImage: String? = null,
     val numFollowers: Int? = null,
     val numFollowing: Int? = null,
-    val userToken: String? = null
+    val userToken: String? = null,
+    val userId: String? = null
 )

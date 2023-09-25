@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/copyComment"
+        android:title="Copy comments"
+        android:icon="@drawable/content_copy"
+        />
+    <!-- يمكنك إضافة المزيد من الرموز التعبيرية هنا -->
+</menu>

@@ -15,14 +15,11 @@ import com.example.shyf_.apis.RetrofitSignUp
 import com.example.shyf_.databinding.ActivitySignUpBinding
 import com.example.shyf_.model.Result
 import com.example.shyf_.model.UserChat
-import com.example.shyf_.model.UserChats
 import com.example.shyf_.notification.Constants
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.util.Random
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -43,26 +41,40 @@ class SignUpActivity : AppCompatActivity() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     lateinit var rootView: ConstraintLayout // تعريف المتغير هنا
     var token = "null"
-    private val IMAGE_REQUEST = 1
     var imageUri: Uri? = null
-    lateinit var user_id: String
-
-    var code = 0
+    private var uid: String? = null
     lateinit var pinView: PinView
-
+    private var randomNumbers: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //..... code
+        auth = FirebaseAuth.getInstance()
         rootView = binding.rootConst
-        initItem()
         onClickItem()
     }
 
-    private fun initItem() {
-        user_id = FirebaseAuth.getInstance().uid.toString()
-        Log.d("YZ",user_id)
+    override fun onStart() {
+        super.onStart()
+        getUserIdFb()
+        randomNumbers = generateUniqueRandomNumbers(5, 1, 1000)
+        Log.d("YZ", randomNumbers.toString())
+        Log.d("YZ", getUserIdFb())
+    }
+
+    private fun getUserIdFb(): String {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // استخراج معرف المستخدم (UID)
+            uid = currentUser.uid
+            // يمكنك استخدام مُعرف المستخدم (uid) هنا في نشاطك
+            // على سبيل المثال، يمكنك تخزينه أو استخدامه كمعرف فريد للمستخدم
+        } else {
+            // المستخدم ليس مسجل الدخول، يمكنك تنفيذ الإجراءات اللازمة في هذا الحالة
+            uid = "null"
+        }
+        return uid!!
     }
 
     private fun onClickItem() {
@@ -78,23 +90,35 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 binding.progressSignup.visibility = View.VISIBLE
                 binding.btnSignUp.visibility = View.GONE
-                signUpUser(email, password, whatsappLink, facebookLink, name, information)
+                signUpUser(
+                    randomNumbers.toInt(),
+                    email,
+                    password,
+                    whatsappLink,
+                    facebookLink,
+                    name,
+                    information,
+                    "gg"
+                )
             }
         }
     }
 
     private fun signUpUser(
+        id: Int,
         email: String,
         password: String,
         whatsappLink: String,
         facebookLink: String,
         nameUser: String,
-        information: String
+        information: String,
+        userIdFb: String,
     ) {
         //retrieve data from Edit texts
         val byteArrayOutputStream = ByteArrayOutputStream()
         val base: String? = null
-        val call: Call<Result> = RetrofitSignUp.getInstance().getMyApi().SignUp(
+        val call: Call<Result> = RetrofitSignUp.getInstance().myApi.SignUp(
+            id,
             email.toString(),
             password.toString(),
             whatsappLink.toString(),
@@ -102,7 +126,8 @@ class SignUpActivity : AppCompatActivity() {
             nameUser.toString(),
             information.toString(),
             "null",
-            token
+            token,
+            userIdFb
         )
         call.enqueue(object : Callback<Result> {
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
@@ -110,7 +135,7 @@ class SignUpActivity : AppCompatActivity() {
                 if (response.body()!!.error != true) {
                     coroutineScope.launch {
                         var userChat = UserChat(
-                            user_id,
+                            userIdFb,
                             email,
                             password,
                             whatsappLink,
@@ -130,6 +155,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 } else {
                     showCenteredMessage("Error To Sign Up!")
+                    Log.e("YZ", response.body()!!.message.toString())
                     binding.progressSignup.visibility = View.GONE
                     binding.btnSignUp.visibility = View.VISIBLE
                 }
@@ -219,14 +245,10 @@ class SignUpActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(userChat.email!!, userChat.password!!)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // تم إنشاء الحساب بنجاح، الآن سنحصل على معرف المستخدم
-                    val currentUser = auth.currentUser
-                    val user_id = currentUser?.uid
-
-                    if (user_id != null) {
-                        userChat.id = user_id // تعيين معرف المستخدم في الكائن UserChat
+                    if (uid != null) {
+                        userChat.id = uid // تعيين معرف المستخدم في الكائن UserChat
                         database = FirebaseFirestore.getInstance()
-                        database.collection(Constants.KEY_COLLECTION_USER).document(user_id)
+                        database.collection(Constants.KEY_COLLECTION_USER).document(uid!!)
                             .set(userChat, SetOptions.merge()).addOnSuccessListener {
                                 showCenteredMessage("Registered Successfully")
                                 finish()
@@ -240,6 +262,36 @@ class SignUpActivity : AppCompatActivity() {
                     showCenteredMessage("Registration Failed!!")
                 }
             }
+    }
+
+    fun getRandomMeetingID(): Int {
+        val id_ = StringBuilder()
+        while (id_.length != 10) {
+            val random = Random().nextInt(10)
+            id_.append(random)
+        }
+        return id_.toString().toInt()
+    }
+
+
+    fun generateUniqueRandomNumbers(count: Int, min: Int, max: Int): Long {
+        if (count > (max - min + 1) || count < 1) {
+            throw IllegalArgumentException("Invalid input. Count should be between 1 and ${max - min + 1}")
+        }
+
+        val numbersSet = mutableSetOf<Int>()
+        val randomNumbers = mutableListOf<Int>()
+
+        while (numbersSet.size < count) {
+            val randomNumber = (min..max).random()
+            if (!numbersSet.contains(randomNumber)) {
+                numbersSet.add(randomNumber)
+                randomNumbers.add(randomNumber)
+            }
+        }
+
+        // دمج الأرقام في متغير Int باستخدام joinToString وتحويله إلى String ثم إلى Int
+        return randomNumbers.joinToString("").toLong()
     }
 
 
@@ -259,3 +311,4 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 }
+

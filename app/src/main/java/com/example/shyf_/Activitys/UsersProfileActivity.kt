@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -28,19 +29,23 @@ import com.example.shyf_.apis.RetrofitDeleteFollow
 import com.example.shyf_.apis.RetrofitGetPostsForUser
 import com.example.shyf_.apis.RetrofitIfFollow
 import com.example.shyf_.databinding.ActivityUsersProfileBinding
+import com.example.shyf_.inite.GetIfUserOnline
+import com.example.shyf_.inite.GetUserData
 import com.example.shyf_.model.Posts
 import com.example.shyf_.model.ResultFollow
 import com.example.shyf_.model.ResultFollowers
+import com.example.shyf_.model.UserChats
+import com.example.shyf_.notification.Cons
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class UsersProfileActivity : AppCompatActivity() {
@@ -49,6 +54,7 @@ class UsersProfileActivity : AppCompatActivity() {
     lateinit var data_base: Data_Base_Holder
     lateinit var rootView: ConstraintLayout // تعريف المتغير هنا
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    var user: UserChats = UserChats()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,10 +104,8 @@ class UsersProfileActivity : AppCompatActivity() {
             finish()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
-        binding.infoUser.setText(intent.getStringExtra("userInfo"))
-        binding.nameUser.setText(
-            intent.getStringExtra("nameUser")
-        )
+        binding.infoUser.text = intent.getStringExtra("userInfo")
+        binding.nameUser.text = intent.getStringExtra("nameUser")
 
         binding.numFollowers.setOnClickListener {
             val i = Intent(this, FollowersActivity::class.java)
@@ -203,6 +207,7 @@ class UsersProfileActivity : AppCompatActivity() {
                     val shared = getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
                     var nameUser = shared.getString("name", "").toString()
                     Log.d("yazan", intent.getStringExtra("token").toString())
+
                 }
                 Log.e("yazan", "Created :)")
             }

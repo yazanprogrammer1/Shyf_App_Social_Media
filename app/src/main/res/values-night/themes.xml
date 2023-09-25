@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <!--  Light Mode  -->
+    <!--  Night Mode  -->
     <!-- Screen background if Dark mode -->
     <style name="SCREEN">
         <item name="android:background">@color/black</item>

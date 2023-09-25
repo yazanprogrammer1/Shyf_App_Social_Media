@@ -16,7 +16,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -30,7 +29,6 @@ import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -50,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         //..... code
         auth = FirebaseAuth.getInstance()
 //        getToken()
-
         val rootView = findViewById<View>(android.R.id.content)  // الحصول على العنصر الجذري للتخطيط
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
@@ -104,7 +101,6 @@ class MainActivity : AppCompatActivity() {
                 showNoInternetMessage(false)
             }
         }
-
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
     }
 

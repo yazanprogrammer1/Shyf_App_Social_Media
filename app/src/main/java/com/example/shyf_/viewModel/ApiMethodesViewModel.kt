@@ -9,12 +9,15 @@ import com.example.shyf_.model.Notes
 import com.example.shyf_.model.Posts
 import com.example.shyf_.model.Request
 import com.example.shyf_.model.Storys
+import com.example.shyf_.notification.Constants
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ApiMethodesViewModel : ViewModel() {
 
+    private lateinit var database: FirebaseFirestore
     val optionsRepo: ApiMethodes = ApiMethodesImpl()
 
     suspend fun getAllPost(noData: ConstraintLayout,shimmer: ShimmerFrameLayout): LiveData<ArrayList<Posts>> {
@@ -71,6 +74,7 @@ class ApiMethodesViewModel : ViewModel() {
             optionsRepo.getNotesUserIfFollow(id,noData,shimmer)
         }
     }
+
 
 
 }

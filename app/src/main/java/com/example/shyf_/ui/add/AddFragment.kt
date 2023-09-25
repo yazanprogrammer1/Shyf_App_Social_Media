@@ -291,8 +291,6 @@ class AddFragment : Fragment(), LocationListener {
             val byteArrayOutputStream = ByteArrayOutputStream()
             val base: String? = null
             if (bitmap == null) {
-//                bitmap = binding.imgFoodPost.getDrawable().toBitmap()
-//                binding.imgFoodPost.setImageBitmap(bitmap)
                 showCenteredMessage("Select Photo")
             } else {
                 bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)

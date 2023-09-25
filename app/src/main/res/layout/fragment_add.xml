@@ -200,7 +200,6 @@
                             app:layout_constraintTop_toBottomOf="@+id/descriptionAddPost"
                             app:startIconDrawable="@drawable/baseline_attach_money_24">
 
-
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
